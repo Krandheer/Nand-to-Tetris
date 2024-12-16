@@ -1,0 +1,9 @@
+CHIP And {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    //get the nand out and supply it as input to 2nd nand
+    Nand(a=a, b=b, out=temp);
+    Nand(a=temp, b=temp, out=out);
+}

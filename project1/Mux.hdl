@@ -1,0 +1,14 @@
+CHIP Mux {
+IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    //basically needs to implement sel*a+b
+    Nand(a=sel, b=b, out=temp);
+    Nand(a=temp, b=temp, out=temp2);
+    // now get the not of two input which is this out and b and then OR it
+    Nand(a=temp2, b=temp2, out=temp3);
+    Nand(a=b, b=b, out=bNandb);
+    // now or them
+    Nand(a=temp3, b=bNandb, out=out);
+}

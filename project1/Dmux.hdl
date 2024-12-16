@@ -1,0 +1,15 @@
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+
+    PARTS:
+    // truth table simplifies this to b = in And sel, a = in And Not(sel)
+    // Not(sel)
+    Not(in=sel, out=notSel);
+
+    // implementation for b
+    And(a=in, b=sel, out=b);
+
+    // implementation for a
+    And(a=in, b=notSel, out=a);
+}

@@ -1,0 +1,21 @@
+CHIP DMux8Way {
+    IN in, sel[3];
+    OUT a, b, c, d, e, f, g, h;
+
+    PARTS:
+    // for first 4 we can use DMux 4 with last two of sel as input to it
+    DMux4Way(in=in, sel=sel[0..1], a=temp1, b=temp2, c=temp3, d=temp4);
+
+    //above is the first half of dmux8way with last two sel as input, now using first
+    // value of sel we can assign the values of a,b,c,d to itself or to e,f,g,h.
+    // sel 000, then out = a, else 100 then out = e
+    DMux(in=temp1, sel=sel[2], a=a, b=e);
+
+    // in case of b which is temp2, assign to itself if sel[2]=0 else to f
+    DMux(in=temp2, sel=sel[2], a=b, b=f);
+
+    // similarly for next two
+    DMux(in=temp3, sel=sel[2], a=c, b=g);
+    DMux(in=temp4, sel=sel[2], a=d, b=h);
+    
+}

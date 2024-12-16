@@ -1,0 +1,15 @@
+CHIP Xor {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    // A'B+AB'=not(not(a'b).not(ab'))
+    //first let's build not(a'b) and not(ab')
+    Nand(a=a, b=a, out=aNanda); //not a
+    Nand(a=b, b=b, out=bNandb); //not b
+    Nand(a=aNanda, b=b, out=aNandaNandb); //not(a'b)
+    Nand(a=a, b=bNandb, out=aNandbNandb); // not(ab')
+
+    // now the last part
+    Nand(a=aNandaNandb, b=aNandbNandb,out=out);
+}
